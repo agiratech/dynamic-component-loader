@@ -1,10 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+import { NewsFeedService }         from './news-feed.service';
+import { NewsFeedItem }            from './news-feed-item';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  template: `
+    <div>
+      <app-news-feed-banner [newsfeeds]="newsfeeds"></app-news-feed-banner>
+    </div>
+  `
 })
-export class AppComponent {
-  title = 'dynamic-component-loader';
+export class AppComponent implements OnInit {
+  newsfeeds: NewsFeedItem[];
+
+  constructor(private newsFeedService: NewsFeedService) {}
+
+  ngOnInit() {
+    this.newsfeeds = this.newsFeedService.getAds();
+  }
 }
+
